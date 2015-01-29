@@ -1,24 +1,10 @@
 # Chef::Handler::StatusNotifier
 
-TODO: Write a gem description
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'chef-handler-status_notifier'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install chef-handler-status_notifier
+Chef Handler for Status Notifier
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO:
 
 ## Contributing
 
