@@ -1,5 +1,6 @@
 require 'rubygems'
-require 'chef/log'
+require 'chef/handler'
+require 'chef'
 require 'hipchat'
 require 'slack-notifier'
 
