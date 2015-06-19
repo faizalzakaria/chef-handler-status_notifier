@@ -5,7 +5,7 @@ describe StatusNotifierHandler do
   let(:slack_params) do
     {
       enabled: true,
-      webhook_url: "https://slacktest.com",
+      webhook_url: "https://hooks.slack.com/services/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",
       channel: "#test",
       username: "FaiNow-Test"
     }

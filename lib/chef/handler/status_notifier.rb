@@ -25,12 +25,15 @@ class StatusNotifierHandler < Chef::Handler
   def report
     if run_status.failed?
       msg = "Failure on #{node.name}: #{run_status.formatted_exception}"
+      status = :failed
+      send_to_hipchat(msg)
     else
       msg = "Chef run succesfully on #{node.name}"
+      status = :success
     end
 
+    send_to_slack(status, msg)
     send_to_hipchat(msg)
-    send_to_slack(msg)
   end
 
   private
@@ -40,11 +43,11 @@ class StatusNotifierHandler < Chef::Handler
     hipchat[@hipchat_params[:room_name]].send(@hipchat_params[:username], msg, :notify => @hipchat_params[:notify])
   end
 
-  def send_to_slack(msg)
+  def send_to_slack(status, msg)
     return unless @slack_params[:enabled]
     slack.channel = @slack_params[:channel]
     slack.username = @slack_params[:username]
-    slack.ping msg
+    slack.ping '', attachments: [slack_attachment(status, msg)]
   end
 
   def hipchat
@@ -53,5 +56,16 @@ class StatusNotifierHandler < Chef::Handler
 
   def slack
     @slack ||= Slack::Notifier.new(@slack_params[:webhook_url])
+  end
+
+  def slack_attachment(status, msg)
+    color = (status == :failed)? "#ff0000" : "#36a64f"
+    {
+      fallback: "Opsworks status, #{msg}",
+      color: "#{color}",
+      author_name: "OpsworksBot (",
+      title: "status: #{status}",
+      text: "#{msg}"
+    }
   end
 end

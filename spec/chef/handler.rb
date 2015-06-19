@@ -1,7 +1,7 @@
 class Chef::Handler
   class RunStatus
     def failed?
-      true
+      false
     end
 
     def formatted_exception
