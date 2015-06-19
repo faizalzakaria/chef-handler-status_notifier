@@ -1,10 +1,9 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'chef/handler/status_notifier/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "chef-handler-status_notifier"
-  spec.version       = Chef::Handler::StatusNotifier::VERSION
+  spec.version       = "0.3.0"
   spec.authors       = ["Faizal Zakaria"]
   spec.email         = ["phaibusiness@gmail.com"]
   spec.summary       = %q{Chef status notifier handler}
@@ -18,4 +17,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.add_runtime_dependency "hipchat"
   spec.add_runtime_dependency "slack-notifier"
+  spec.add_development_dependency "rspec"
 end

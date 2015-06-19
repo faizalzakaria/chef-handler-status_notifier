@@ -1,6 +1,9 @@
 require 'rubygems'
-require 'chef/handler'
-require 'chef'
+
+unless ENV['RSPEC']
+  require 'chef'
+  require 'chef/handler'
+end
 require 'hipchat'
 require 'slack-notifier'
 
