@@ -61,9 +61,9 @@ class StatusNotifierHandler < Chef::Handler
   def slack_attachment(node_name, status, msg)
     color = (status == :failed)? "#ff0000" : "#36a64f"
     {
-      fallback: "Opsworks status, #{msg}",
+      fallback: "Chef status, #{msg}",
       color: "#{color}",
-      author_name: "OpsworksBot (#{node_name})",
+      author_name: "Fai's Slave (#{node_name})",
       title: "status: #{status}",
       text: "#{msg}"
     }
