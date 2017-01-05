@@ -45,9 +45,7 @@ class StatusNotifierHandler < Chef::Handler
 
   def send_to_slack(node_name, status, msg)
     return unless @slack_params[:enabled]
-    slack.channel = @slack_params[:channel]
-    slack.username = @slack_params[:username]
-    slack.ping '', attachments: [slack_attachment(node_name, status, msg)]
+    slack.ping '', attachments: [slack_attachment(node_name, status, msg)], channel: @slack_params[:channel], username: @slack_params[:username]
   end
 
   def hipchat
