@@ -22,7 +22,6 @@ class StatusNotifierHandler < Chef::Handler
     if run_status.failed?
       msg = failed_message
       status = :failed
-      send_to_hipchat(msg)
     else
       msg = success_message
       status = :success
