@@ -1,10 +1,23 @@
 # Chef::Handler::StatusNotifier
 
-Chef Handler for Status Notifier
+Chef Handler for Status Notifier. This is being used here, https://github.com/faizalzakaria/chef-run-notifier .
 
 ## Usage
 
-TODO:
+In your Chef recipe,
+
+```ruby
+chef_gem 'chef-handler-status_notifier' do
+  compile_time true if respond_to?(:compile_time)
+  action :upgrade
+end
+
+chef_handler 'StatusNotifierHandler' do
+  source 'chef/handler/status_notifier'
+  arguments [node['run_notifier']['slack'], node['run_notifier']['hipchat']]
+  action :nothing
+end.run_action(:enable)
+```
 
 ## Contributing
 
