@@ -9,26 +9,22 @@ require 'slack-notifier'
 
 class StatusNotifierHandler < Chef::Handler
 
-  def initialize(slack_params, hipchat_params)
-    initialize_hipchat(hipchat_params)
-    initialize_slack(slack_params)
-  end
+  DEFAULT_FAILED_MESSAGE  = '"Failure on #{node.name}: #{run_status.formatted_exception}"'.freeze
+  DEFAULT_SUCCESS_MESSAGE = '"Chef run succesfully on #{node.name}"'.freeze
 
-  def initialize_hipchat(params)
-    @hipchat_params = params
-  end
-
-  def initialize_slack(params)
-    @slack_params = params
+  def initialize(slack_params, hipchat_params, custom_message_params = {})
+    @slack_params   = slack_params
+    @hipchat_params = hipchat_params
+    @custom_message_params = custom_message_params
   end
 
   def report
     if run_status.failed?
-      msg = "Failure on #{node.name}: #{run_status.formatted_exception}"
+      msg = failed_message
       status = :failed
       send_to_hipchat(msg)
     else
-      msg = "Chef run succesfully on #{node.name}"
+      msg = success_message
       status = :success
     end
 
@@ -37,6 +33,19 @@ class StatusNotifierHandler < Chef::Handler
   end
 
   private
+
+  def eval_message_for(message)
+    return nil if message.nil?
+    eval(message)
+  end
+
+  def failed_message
+    eval_message_for(@custom_message_params[:failed_message] || DEFAULT_FAILED_MESSAGE)
+  end
+
+  def success_message
+    eval_message_for(@custom_message_params[:success_message] || DEFAULT_SUCCESS_MESSAGE)
+  end
 
   def send_to_hipchat(msg)
     return unless @hipchat_params[:enabled]

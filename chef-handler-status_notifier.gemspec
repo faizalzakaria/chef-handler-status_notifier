@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "chef-handler-status_notifier"
-  spec.version       = "0.4.4"
+  spec.version       = "0.5.0"
   spec.authors       = ["Faizal Zakaria"]
   spec.email         = ["phaibusiness@gmail.com"]
   spec.summary       = %q{Chef status notifier handler}
