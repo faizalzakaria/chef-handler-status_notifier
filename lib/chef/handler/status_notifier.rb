@@ -4,7 +4,7 @@ unless ENV['RSPEC']
   require 'chef'
   require 'chef/handler'
 end
-require 'hipchat'
+
 require 'slack-notifier'
 
 class StatusNotifierHandler < Chef::Handler
@@ -57,7 +57,7 @@ class StatusNotifierHandler < Chef::Handler
   end
 
   def hipchat
-    @hipchat ||= HipChat::Client.new(@hipchat_params[:api_token])
+    return {}
   end
 
   def slack
